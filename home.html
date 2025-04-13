@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Canteen Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .dish-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+        .dish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .dish-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .cart-item {
+            transition: all 0.3s ease;
+        }
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+        }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+        .carousel-item img {
+            height: 350px;
+            object-fit: cover;
+        }
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .carousel-quick-add {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="text-center mb-4">🇮🇳 Spice Valley Canteen</h1>
+        
+        <!-- Food Carousel -->
+        <div id="foodCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#foodCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#foodCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#foodCarousel" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#foodCarousel" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#foodCarousel" data-bs-slide-to="4"></button>
+            </div>
+            <div class="carousel-inner rounded shadow">
+                <div class="carousel-item active">
+                    <img src="https://imgs.search.brave.com/NyIiHiNrZw0i5Z-qVUe7wyh1jXg1BBymBLFCir5hGRg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9idXR0ZXItY2hp/Y2tlbl80NjY2ODkt/NTQ3NzcuanBnP3Nl/bXQ9YWlzX2h5YnJp/ZA" class="d-block w-100" alt="Butter Chicken">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Butter Chicken 🍗</h3>
+                        <p>Tender chicken in rich creamy tomato gravy with butter</p>
+                        <p><span class="badge bg-success fs-6">₹250</span></p>
+                    </div>
+                    <button class="btn btn-primary carousel-quick-add" onclick="addToCart('Butter Chicken', 250)">
+                        Add to Cart
+                    </button>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://imgs.search.brave.com/w2KZkaVrmjpgEKZlRfSWJD4rsH91ts0a6cJRhAYiFx8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTEy/NjUyOTIzNy9waG90/by9wYW5lZXItdGlr/a2EtYS1kaXNoLWF0/LWluZGlhbi1raXRj/aGVuLWF0LXlhdS1t/YS10ZWktMjRvY3Qx/NC0wNm5vdmVtYmVy/MjAxNC1sZWFkLWZl/YXR1cmUtMy5qcGc_/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9UDM2/MjV4eGZ5TnVjUG9Y/TlZLenBIdk1MTXFC/YlcwQjJOR0pqYmRo/RHlSND0" class="d-block w-100" alt="Paneer Tikka">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Paneer Tikka 🧀</h3>
+                        <p>Grilled cottage cheese marinated in spices</p>
+                        <p><span class="badge bg-success fs-6">₹200</span></p>
+                    </div>
+                    <button class="btn btn-primary carousel-quick-add" onclick="addToCart('Paneer Tikka', 200)">
+                        Add to Cart
+                    </button>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://imgs.search.brave.com/7K7M_QKSvTPmsuqUgaUgSeu3EgDjCB-RJjg27BDRkFM/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTE5/NTMxOTMxL3Bob3Rv/L2RlbGhpLWJpcnlh/bmktMS5qcGc_cz02/MTJ4NjEyJnc9MCZr/PTIwJmM9UVBudUl5/Q2tQZDd1aEtXV1Bl/ZjR6NENzQ19qLTdp/ZU04aHliYTJScDVO/bz0" class="d-block w-100" alt="Biryani">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Hyderabadi Biryani 🍚</h3>
+                        <p>Fragrant rice with spices and tender meat</p>
+                        <p><span class="badge bg-success fs-6">₹180</span></p>
+                    </div>
+                    <button class="btn btn-primary carousel-quick-add" onclick="addToCart('Biryani', 180)">
+                        Add to Cart
+                    </button>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://imgs.search.brave.com/4XSUSVZ-Su1HvV9iQxLFaaO0j7Q97rGlHEqeaCstvA0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzA1LzQwLzI4/LzM2MF9GXzUwNTQw/MjgxMV9wckw3RDVH/bzM1TFpLcFFlVVZF/VWlDTG5PNnNwUzNz/ay5qcGc" class="d-block w-100" alt="Masala Dosa">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Masala Dosa 🥘</h3>
+                        <p>Crispy rice crepe with spiced potato filling</p>
+                        <p><span class="badge bg-success fs-6">₹120</span></p>
+                    </div>
+                    <button class="btn btn-primary carousel-quick-add" onclick="addToCart('Masala Dosa', 120)">
+                        Add to Cart
+                    </button>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://imgs.search.brave.com/Zar9zn-KLhg3RLOs0ZkKO69hD87ol6Wl3uczMQaxRUQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/dDRjdjNkdnoxdDYy/MS5qcGc_d2lkdGg9/NjQwJmNyb3A9c21h/cnQmYXV0bz13ZWJw/JnM9OTA4MzhhZDg5/Yjc5MzhmMzJlMWM4/OTYwYmEzMmU4MTAy/Mjg3ZmZiOQ" class="d-block w-100" alt="Gulab Jamun">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h3>Gulab Jamun 🍡</h3>
+                        <p>Soft milk balls in sweet sugar syrup</p>
+                        <p><span class="badge bg-success fs-6">₹80</span></p>
+                    </div>
+                    <button class="btn btn-primary carousel-quick-add" onclick="addToCart('Gulab Jamun', 80)">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#foodCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#foodCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        
+        <!-- Menu Button -->
+        <div class="text-center mb-4">
+            <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#menuModal">
+                View Menu
+            </button>
+        </div>
+
+        <!-- Menu Modal -->
+        <div class="modal fade" id="menuModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Our Special Dishes</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- Dish Items -->
+                            <div class="col-md-6 mb-3">
+                                <div class="card dish-card" onclick="addToCart('Butter Chicken', 250)">
+                                    <img src="https://imgs.search.brave.com/NyIiHiNrZw0i5Z-qVUe7wyh1jXg1BBymBLFCir5hGRg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9idXR0ZXItY2hp/Y2tlbl80NjY2ODkt/NTQ3NzcuanBnP3Nl/bXQ9YWlzX2h5YnJp/ZA" class="card-img-top dish-img" alt="Butter Chicken">
+                                    <div class="card-body">
+                                        <h5>Butter Chicken 🍗</h5>
+                                        <p class="text-muted">Tender chicken in rich creamy tomato gravy with butter</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-success">₹250</span>
+                                            <button class="btn btn-sm btn-primary">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="card dish-card" onclick="addToCart('Paneer Tikka', 200)">
+                                    <img src="https://imgs.search.brave.com/w2KZkaVrmjpgEKZlRfSWJD4rsH91ts0a6cJRhAYiFx8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTEy/NjUyOTIzNy9waG90/by9wYW5lZXItdGlr/a2EtYS1kaXNoLWF0/LWluZGlhbi1raXRj/aGVuLWF0LXlhdS1t/YS10ZWktMjRvY3Qx/NC0wNm5vdmVtYmVy/MjAxNC1sZWFkLWZl/YXR1cmUtMy5qcGc_/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9UDM2/MjV4eGZ5TnVjUG9Y/TlZLenBIdk1MTXFC/YlcwQjJOR0pqYmRo/RHlSND0" class="card-img-top dish-img" alt="Paneer Tikka">
+                                    <div class="card-body">
+                                        <h5>Paneer Tikka 🧀</h5>
+                                        <p class="text-muted">Grilled cottage cheese marinated in spices</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-success">₹200</span>
+                                            <button class="btn btn-sm btn-primary">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="card dish-card" onclick="addToCart('Biryani', 180)">
+                                    <img src="https://imgs.search.brave.com/7K7M_QKSvTPmsuqUgaUgSeu3EgDjCB-RJjg27BDRkFM/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTE5/NTMxOTMxL3Bob3Rv/L2RlbGhpLWJpcnlh/bmktMS5qcGc_cz02/MTJ4NjEyJnc9MCZr/PTIwJmM9UVBudUl5/Q2tQZDd1aEtXV1Bl/ZjR6NENzQ19qLTdp/ZU04aHliYTJScDVO/bz0" class="card-img-top dish-img" alt="Biryani">
+                                    <div class="card-body">
+                                        <h5>Hyderabadi Biryani 🍚</h5>
+                                        <p class="text-muted">Fragrant rice with spices and tender meat</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-success">₹180</span>
+                                            <button class="btn btn-sm btn-primary">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="card dish-card" onclick="addToCart('Masala Dosa', 120)">
+                                    <img src="https://imgs.search.brave.com/4XSUSVZ-Su1HvV9iQxLFaaO0j7Q97rGlHEqeaCstvA0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzA1LzQwLzI4/LzM2MF9GXzUwNTQw/MjgxMV9wckw3RDVH/bzM1TFpLcFFlVVZF/VWlDTG5PNnNwUzNz/ay5qcGc" class="card-img-top dish-img" alt="Masala Dosa">
+                                    <div class="card-body">
+                                        <h5>Masala Dosa 🥘</h5>
+                                        <p class="text-muted">Crispy rice crepe with spiced potato filling</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-success">₹120</span>
+                                            <button class="btn btn-sm btn-primary">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <div class="card dish-card" onclick="addToCart('Gulab Jamun', 80)">
+                                    <img src="https://imgs.search.brave.com/Zar9zn-KLhg3RLOs0ZkKO69hD87ol6Wl3uczMQaxRUQ/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/dDRjdjNkdnoxdDYy/MS5qcGc_d2lkdGg9/NjQwJmNyb3A9c21h/cnQmYXV0bz13ZWJw/JnM9OTA4MzhhZDg5/Yjc5MzhmMzJlMWM4/OTYwYmEzMmU4MTAy/Mjg3ZmZiOQ" class="card-img-top dish-img" alt="Gulab Jamun">
+                                    <div class="card-body">
+                                        <h5>Gulab Jamun 🍡</h5>
+                                        <p class="text-muted">Soft milk balls in sweet sugar syrup</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-success">₹80</span>
+                                            <button class="btn btn-sm btn-primary">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Section -->
+        <div class="card">
+            <div class="card-header">
+                <h4>Your Cart 🛒</h4>
+            </div>
+            <div class="card-body">
+                <div id="cartItems" class="mb-3"></div>
+                <div class="input-group mb-3">
+                    <input type="text" id="couponCode" class="form-control" placeholder="Enter coupon code">
+                    <button class="btn btn-outline-primary" onclick="applyCoupon()">Apply</button>
+                </div>
+                <div id="totalSection">
+                    <h5>Total: ₹<span id="totalAmount">0</span></h5>
+                    <div id="discountMessage" class="text-success"></div>
+                </div>
+                <button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#paymentModal">Proceed to Payment</button>
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div class="modal fade" id="paymentModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Payment Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <h4>Total: ₹<span id="paymentTotal">0</span></h4>
+                            <div id="couponStatus" class="text-success mb-3"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Select Payment Method</label>
+                            <select class="form-select" id="paymentMethod">
+                                <option value="upi">UPI</option>
+                                <option value="card">Credit/Debit Card</option>
+                                <option value="netbanking">Net Banking</option>
+                                <option value="cash">Cash</option>
+                            </select>
+                        </div>
+                        <div id="paymentDetails">
+                            <!-- Dynamic payment fields will appear here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="processPayment()">Confirm Payment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let total = 0;
+        let activeCoupon = null;
+
+        const coupons = {
+            'FIRST10': { discount: 10, type: 'percentage', minAmount: 300 },
+            'WED20': { discount: 20, type: 'fixed', minAmount: 150 }
+        };
+
+        // Initialize cart from localStorage
+        updateCart();
+
+        function showToast(message, type = 'success') {
+            const toast = new bootstrap.Toast(document.getElementById('toast'));
+            const toastBody = document.querySelector('.toast-body');
+            toastBody.textContent = message;
+            toast.show();
+        }
+
+        function addToCart(itemName, price) {
+            const existingItem = cart.find(item => item.name === itemName);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ name: itemName, price: price, quantity: 1 });
+            }
+            showToast(`${itemName} added to cart!`);
+            saveCart();
+        }
+
+        function removeItem(index) {
+            const itemName = cart[index].name;
+            cart.splice(index, 1);
+            showToast(`${itemName} removed from cart!`);
+            saveCart();
+        }
+
+        function adjustQuantity(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity < 1) cart.splice(index, 1);
+            saveCart();
+        }
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+            total = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item mb-2';
+                itemDiv.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6>${item.name}</h6>
+                            <span>₹${item.price} x ${item.quantity}</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-secondary quantity-btn" onclick="adjustQuantity(${index}, -1)">-</button>
+                            <button class="btn btn-sm btn-outline-secondary quantity-btn" onclick="adjustQuantity(${index}, 1)">+</button>
+                            <button class="btn btn-danger btn-sm ms-2" onclick="removeItem(${index})">×</button>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(itemDiv);
+            });
+
+            document.getElementById('totalAmount').textContent = calculateTotal();
+            document.getElementById('paymentTotal').textContent = calculateTotal();
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('couponCode').value.toUpperCase();
+            const coupon = coupons[code];
+            
+            if (!coupon) {
+                showToast('Invalid coupon code!', 'error');
+                return;
+            }
+
+            if (total < coupon.minAmount) {
+                showToast(`Minimum order amount ₹${coupon.minAmount} required!`, 'error');
+                return;
+            }
+
+            activeCoupon = coupon;
+            document.getElementById('discountMessage').textContent = `Coupon applied: ${code}`;
+            showToast('Coupon applied successfully!');
+            updateCart();
+        }
+
+        function calculateTotal() {
+            let finalTotal = total;
+            
+            if (activeCoupon) {
+                if (activeCoupon.type === 'percentage') {
+                    finalTotal -= total * (activeCoupon.discount / 100);
+                } else {
+                    finalTotal -= activeCoupon.discount;
+                }
+            }
+            
+            return finalTotal > 0 ? finalTotal.toFixed(2) : 0;
+        }
+
+        function processPayment() {
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const totalAmount = calculateTotal();
+            
+            if (totalAmount <= 0) {
+                showToast('Please add items to cart first!', 'error');
+                return;
+            }
+
+            showToast(`Payment of ₹${totalAmount} successful via ${paymentMethod}!`);
+            cart = [];
+            activeCoupon = null;
+            saveCart();
+            bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
+        }
+
+        // Payment method change handler
+        document.getElementById('paymentMethod').addEventListener('change', function(e) {
+            const paymentDetails = document.getElementById('paymentDetails');
+            const method = e.target.value;
+            
+            let html = '';
+            switch(method) {
+                case 'upi':
+                    html = `<div class="mb-3">
+                                <label class="form-label">UPI ID</label>
+                                <input type="text" class="form-control" placeholder="example@upi">
+                            </div>`;
+                    break;
+                case 'card':
+                    html = `<div class="mb-3">
+                                <label class="form-label">Card Number</label>
+                                <input type="text" class="form-control" placeholder="4111 1111 1111 1111">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Expiry Date</label>
+                                    <input type="text" class="form-control" placeholder="MM/YY">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">CVV</label>
+                                    <input type="text" class="form-control" placeholder="123">
+                                </div>
+                            </div>`;
+                    break;
+                case 'netbanking':
+                    html = `<div class="mb-3">
+                                <label class="form-label">Select Bank</label>
+                                <select class="form-select">
+                                    <option>State Bank of India</option>
+                                    <option>HDFC Bank</option>
+                                    <option>ICICI Bank</option>
+                                </select>
+                            </div>`;
+                    break;
+                case 'cash':
+                    html = `<div class="alert alert-info">
+                                Pay cash at the counter when collecting your order
+                            </div>`;
+                    break;
+            }
+            
+            paymentDetails.innerHTML = html;
+        });
+
+        // Initialize the carousel
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = new bootstrap.Carousel(document.getElementById('foodCarousel'), {
+                interval: 3000,
+                wrap: true
+            });
+        });
+    </script>
+</body>
+</html>
